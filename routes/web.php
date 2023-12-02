@@ -101,9 +101,7 @@ Route::get('contact',function(){
     return view('contact');
 
 });
-// Route::get('blog',function(){
-//     return view('blog');
-// });
+
 
     Route::prefix('blog')->group(function(){
         Route::get('/', function () {
@@ -111,7 +109,7 @@ Route::get('contact',function(){
         });
 
     Route::get('science',function(){
-        return "<h1 style='text-align: center;'>This is the Science page</h1>";
+     return "<h1 style='text-align: center;'>This is the Science page</h1>";
     });
 
     Route::get('sport',function(){
