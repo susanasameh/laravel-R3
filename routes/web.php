@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\FormController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -103,6 +106,8 @@ Route::get('contact',function(){
 });
 
 
+
+
     Route::prefix('blog')->group(function(){
         Route::get('/', function () {
             return view('blog');
@@ -125,11 +130,19 @@ Route::get('contact',function(){
         return "<h1 style='text-align: center;'>This is the Medical page<h1>";
     });
 
-
-
-
-
-
 });
+
+Route::get('login',function(){
+    return view('login');
+});
+
+Route::post('logged',function(){
+    return "you are logged in";
+})->name('logged');
+
+Route::get('control',[ExampleController::class,'show']);
+
+Route::post('form',[FormController::class,'store'])->name('form');
+// Route::post('form','FormController@store')->name('form');
 
 
