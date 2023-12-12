@@ -1,9 +1,12 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,5 +147,31 @@ Route::get('control',[ExampleController::class,'show']);
 
 Route::post('form',[FormController::class,'store'])->name('form');
 // Route::post('form','FormController@store')->name('form');
+
+// Route::resource('car', CarController::class);
+
+
+
+//routes of car table:
+
+Route::get('createcar',[CarController::class,'create']);
+
+//store into cartable
+
+Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
+
+Route::get('car',[CarController::class,'index']);
+
+
+
+//routes of post table:
+//the form page
+Route::get('addPost',[PostController::class,'create']);
+Route::post('storePost',[PostController::class,'store'])->name('storePost');
+//the index page
+Route::get('post',[PostController::class,'index']);
+
+
+
 
 
