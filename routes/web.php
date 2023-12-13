@@ -154,13 +154,16 @@ Route::post('form',[FormController::class,'store'])->name('form');
 
 //routes of car table:
 
-Route::get('createcar',[CarController::class,'create']);
+Route::get('createCar',[CarController::class,'create'])->name('createCar');
 
 //store into cartable
 
 Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 
-Route::get('car',[CarController::class,'index']);
+Route::get('car',[CarController::class,'index'])->name('car');
+Route::get('updateCar/{id}', [CarController::class, 'edit']);
+Route::put('update/{id}', [CarController::class, 'update'])->name('update');
+Route::get('showCar/{id}',[CarController::class, 'show'])->name('showCar');
 
 
 

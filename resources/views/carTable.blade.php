@@ -22,6 +22,7 @@
         <th>Published</th>
         <th>CreatedAt</th>
         <th>UpdatedAt</th>
+        <th>Edit</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +42,8 @@
         </td>
         <td>{{$data->created_at}}</td>
         <td>{{$data->updated_at}}</td>
+        <td><a href="updateCar/{{ $data->id }}">Edit</a></td>
+        <td><a href="showCar/{{ $data->id }}">Show</a></td>
       </tr>
        @endforeach
 
