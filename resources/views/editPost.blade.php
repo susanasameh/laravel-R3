@@ -32,30 +32,35 @@ div
 
 <body>
     @include('include.postNav')
-<div class="container">
+
+
    <h1>welcome to our website</h1>
-<form action="{{route('storePost')}}" method="POST">
-@csrf
+
+
+<div class="container">
     <h2>Post Form</h2>
+    <form action="{{route('updatePost',$post->postId)}}" method="post">
+        @csrf
+        @method('put')
       <div class="form-group">
         <label for="title">Post Title:</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter title" name="postTitle">
+        <input type="text" class="form-control" id="title" placeholder="Enter title" name="postTitle" value="{{$post->postTitle}}">
       </div>
       <div class="form-group">
         <label for="description">Post Description:</label>
         {{-- <input type="text" class="form-control" id="description" placeholder="Enter password" name="description"> --}}
-        <textarea class="form-control" name="postDescription" id="" cols="60" rows="3"></textarea>
+        <textarea class="form-control" name="postDescription" id="" cols="60" rows="3">{{$post->postDescription}}</textarea>
       </div>
       <div class="form-group">
         <label for="author">Post Author:</label>
-        <input type="text" class="form-control" id="author" placeholder="Enter name" name="postAuthor">
+        <input type="text" class="form-control" id="author" placeholder="Enter title" name="postAuthor" value="{{$post->postAuthor}}">
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" name="postPublished">Post Published</label>
+          <input type="checkbox" name="postPublished" id="checkbox" @checked($post->postPublished)>Post Published</label>
       </div>
 <div>
-<button type="submit" name="submit" class="btn btn-info"><span>INSERT</span></button>
+<button type="submit" name="update" class="btn btn-info"><span>Update</span></button>
 </div>
 
 </form>

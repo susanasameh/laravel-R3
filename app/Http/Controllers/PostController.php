@@ -7,6 +7,13 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    private $columns=[
+        'postId',
+        'postTitle',
+        'postDescription',
+        'postPublished',
+        'postAuthor',
+    ];
     /**
      * Display a listing of the resource.
      */
@@ -29,17 +36,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post=new Post();
-        $post->postTitle=$request->title;
-        $post->postDescription=$request->description;
-        $post->postAuthor=$request->author;
-        if(isset($request->published)){
-            $post->postPublished=1;
-        }else{
-            $post->postPublished=0;
-        }
+        $data =$request->only($this->columns);
+        $data['postPublished']=isset($request->postPublished);
+        Post::create($data);
+        return redirect('post');
 
-        $post->save();
+
+        // $post=new Post();
+        // $post->postTitle=$request->title;
+        // $post->postDescription=$request->description;
+        // $post->postAuthor=$request->author;
+        // if(isset($request->published)){
+        //     $post->postPublished=1;
+        // }else{
+        //     $post->postPublished=0;
+        // }
+
+        // $post->save();
         return "data added successfully";
 
     }
@@ -49,7 +62,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('showPost',compact('post'));
     }
 
     /**
@@ -57,7 +71,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('editPost',compact('post'));
     }
 
     /**
@@ -65,7 +80,11 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data =$request->only($this->columns);
+        $data['postPublished']=isset($request->postPublished);
+        Post::where('postId',$id)->update($data);
+        return redirect('post');
+
     }
 
     /**

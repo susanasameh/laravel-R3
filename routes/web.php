@@ -169,10 +169,21 @@ Route::get('showCar/{id}',[CarController::class, 'show'])->name('showCar');
 
 //routes of post table:
 //the form page
-Route::get('addPost',[PostController::class,'create']);
+Route::get('addPost',[PostController::class,'create'])->name('addPost');
 Route::post('storePost',[PostController::class,'store'])->name('storePost');
 //the index page
-Route::get('post',[PostController::class,'index']);
+Route::get('post',[PostController::class,'index'])->name('post');
+//the edit page
+Route::get('editPost/{id}', [PostController::class, 'edit']);
+//to update data in database
+Route::put('updatePost/{id}', [PostController::class, 'update'])->name('updatePost');
+//to show one column
+Route::get('showPost/{id}',[PostController::class, 'show'])->name('showPost');
+
+
+
+
+
 
 
 
