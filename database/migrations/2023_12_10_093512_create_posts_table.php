@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->id('postId');
+            $table->id();
             $table->string('postTitle', 100);
             $table->text('postDescription');
             $table->boolean('postPublished');
             $table->string('postAuthor', 100);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

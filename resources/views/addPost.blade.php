@@ -22,10 +22,15 @@ h2 {
     text-transform: uppercase;
     color: #111311;
 }
-div
-  {
-    font-size:1.1em;
+div {
+    color: #f91e1e;
+    font-size:1em;
     font-weight:bold;
+  }
+
+  label {
+    color: #111311;
+    font-size:2em;
   }
 
 </style>
@@ -39,17 +44,29 @@ div
     <h2>Post Form</h2>
       <div class="form-group">
         <label for="title">Post Title:</label>
-        <input type="text" class="form-control" id="title" placeholder="Enter title" name="postTitle">
+        <input type="text" class="form-control" id="title" placeholder="Enter title" name="postTitle" value="{{ old('postTitle') }}">
+        @error('postTitle')
+        {{$message}}
+        @enderror
       </div>
+      <br>
       <div class="form-group">
         <label for="description">Post Description:</label>
         {{-- <input type="text" class="form-control" id="description" placeholder="Enter password" name="description"> --}}
-        <textarea class="form-control" name="postDescription" id="" cols="60" rows="3"></textarea>
+        <textarea class="form-control" name="postDescription" id="" cols="60" rows="3" value="{{ old('postDescription') }}"></textarea>
+        @error('postDescription')
+        {{$message}}
+        @enderror
       </div>
+      <br>
       <div class="form-group">
         <label for="author">Post Author:</label>
-        <input type="text" class="form-control" id="author" placeholder="Enter name" name="postAuthor">
+        <input type="text" class="form-control" id="author" placeholder="Enter name" name="postAuthor" value="{{ old('postAuthor') }}">
+        @error('postAuthor')
+        {{$message}}
+        @enderror
       </div>
+      <br>
       <div class="checkbox">
         <label>
           <input type="checkbox" name="postPublished">Post Published</label>

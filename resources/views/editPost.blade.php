@@ -24,8 +24,14 @@ h2 {
 }
 div
   {
+    color:#f51219;
     font-size:1.1em;
     font-weight:bold;
+  }
+
+  label {
+    color: #111311;
+    font-size:1.5em;
   }
 
 </style>
@@ -38,22 +44,31 @@ div
 
 
 <div class="container">
-    <h2>Post Form</h2>
-    <form action="{{route('updatePost',$post->postId)}}" method="post">
+    <h2>Update Post Form</h2>
+    <form action="{{route('updatePost',$post->id)}}" method="post">
         @csrf
         @method('put')
       <div class="form-group">
         <label for="title">Post Title:</label>
         <input type="text" class="form-control" id="title" placeholder="Enter title" name="postTitle" value="{{$post->postTitle}}">
+        @error('postTitle')
+        {{$message}}
+        @enderror
       </div>
       <div class="form-group">
         <label for="description">Post Description:</label>
         {{-- <input type="text" class="form-control" id="description" placeholder="Enter password" name="description"> --}}
         <textarea class="form-control" name="postDescription" id="" cols="60" rows="3">{{$post->postDescription}}</textarea>
+        @error('postDescription')
+        {{$message}}
+        @enderror
       </div>
       <div class="form-group">
         <label for="author">Post Author:</label>
         <input type="text" class="form-control" id="author" placeholder="Enter title" name="postAuthor" value="{{$post->postAuthor}}">
+        @error('postAuthor')
+        {{$message}}
+        @enderror
       </div>
       <div class="checkbox">
         <label>

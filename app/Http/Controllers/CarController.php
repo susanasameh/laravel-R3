@@ -37,13 +37,22 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //use model+controll method to insert data
-        //use protected $fillable
-
-        $data=$request->only($this->columns);
+        $data=$request->validate([
+            "title"=>'required|string|max:50',
+            "description"=>'required|string',
+        ]);
         $data['published']=isset($request->published);
         Car::create($data);
         return redirect('car');
+
+
+        //use model+controll method to insert data
+        //use protected $fillable
+
+        // $data=$request->only($this->columns);
+        // $data['published']=isset($request->published);
+        // Car::create($data);
+        // return redirect('car');
 
 
         //to insert and add data to db table
@@ -105,6 +114,25 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Car::where('id',$id)->delete();
+        return redirect('car');
+    }
+
+    public function trashed()
+    {
+        $car=Car::onlyTrashed()->get();
+        return view('trashed',compact('car'));
+    }
+
+    public function forceDelete(string $id)
+    {
+        Car::where('id',$id)->forceDelete();
+        return redirect('car');
+    }
+
+    public function restore(string $id)
+    {
+        Car::where('id',$id)->restore();
+        return redirect('car');
     }
 }

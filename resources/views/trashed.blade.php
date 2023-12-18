@@ -11,7 +11,7 @@
 <body>
     @include('include.nav')
 <div class="container">
-  <h2>CARS LIST</h2>
+  <h2>Trashed CARS LIST</h2>
   <p></p>
   <table class="table table-striped">
     <thead style="background-color: rgb(247, 175, 88)">
@@ -22,9 +22,8 @@
         <th>Published</th>
         <th>CreatedAt</th>
         <th>UpdatedAt</th>
-        <th>Edit</th>
-        <th>show</th>
         <th>Delete</th>
+        <th>Restore</th>
       </tr>
     </thead>
     <tbody>
@@ -44,7 +43,8 @@
         </td>
         <td>{{$data->created_at}}</td>
         <td>{{$data->updated_at}}</td>
-        <td><a href="updateCar/{{ $data->id }}" style="
+        {{-- <td><a href="deleteCar/{{ $data->id }}">Delete</a></td> --}}
+        <td><a href="forceDeleteCar/{{ $data->id }}" onclick="return confirm('Are you sure you want to delete?')" style="
             background-color: rgb(133, 79, 234);
               color: rgb(255, 254, 254);
               padding: 14px 25px;
@@ -57,8 +57,8 @@
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 
 
-          ">Edit</a></td>
-        <td><a href="showCar/{{ $data->id }}" style="background-color: rgb(79, 234, 154);;
+          ">Force Delete</a></td>
+        <td><a href="restoreCar/{{ $data->id }}" onclick="return confirm('Are you sure you want to delete?')" style="background-color: rgb(79, 234, 154);;
             color: rgb(14, 11, 11);
             padding: 14px 25px;
             text-align: center;
@@ -69,22 +69,9 @@
           border-radius: 50%;
           box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 
-            ">Show</a></td>
-        {{-- <td><a href="deleteCar/{{ $data->id }}">Delete</a></td> --}}
-        <td><a href="deleteCar/{{ $data->id }}" onclick="return confirm('Are you sure you want to delete?')" style="
-            background-color: rgb(237, 8, 8);
-              color: rgb(255, 254, 254);
-              padding: 14px 25px;
-              text-align: center;
-              text-decoration: none;
-              display: inline-block;
-             hover:active;
-            hover.active.background-color: rgb(133, 79, 234);
-            border-radius: 50%;
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+            ">Restore</a></td>
 
-  ">Delete</a></td>
-      </tr>
+    </tr>
        @endforeach
 
     </tbody>
@@ -93,3 +80,4 @@
 
 </body>
 </html>
+

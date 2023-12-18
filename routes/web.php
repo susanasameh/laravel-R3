@@ -164,6 +164,13 @@ Route::get('car',[CarController::class,'index'])->name('car');
 Route::get('updateCar/{id}', [CarController::class, 'edit']);
 Route::put('update/{id}', [CarController::class, 'update'])->name('update');
 Route::get('showCar/{id}',[CarController::class, 'show'])->name('showCar');
+Route::get('deleteCar/{id}',[CarController::class, 'destroy']);
+Route::get('trashedCar',[CarController::class, 'trashed'])->name('trashedCar');
+Route::get('forceDeleteCar/{id}',[CarController::class, 'forceDelete'])->name('forceDeleteCar');
+Route::get('restoreCar/{id}',[CarController::class, 'restore'])->name('restoreCar');
+
+
+
 
 
 
@@ -179,6 +186,16 @@ Route::get('editPost/{id}', [PostController::class, 'edit']);
 Route::put('updatePost/{id}', [PostController::class, 'update'])->name('updatePost');
 //to show one column
 Route::get('showPost/{id}',[PostController::class, 'show'])->name('showPost');
+//to delete one column
+Route::get('deletePost/{id}',[PostController::class, 'destroy']);
+//to move the data to trash
+Route::get('trashedPost',[PostController::class, 'trashed'])->name('trashedPost');
+//to force delete the data
+Route::get('forceDelete/{id}',[PostController::class, 'forceDelete'])->name('forceDeletePost');
+//to restore data from trashed table
+Route::get('restorePost/{id}',[PostController::class, 'restore'])->name('restorePost');
+
+
 
 
 

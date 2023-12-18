@@ -7,13 +7,14 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    private $columns=[
-        'postId',
-        'postTitle',
-        'postDescription',
-        'postPublished',
-        'postAuthor',
-    ];
+    // method to store and update data 
+    // private $columns=[
+    //     'id',
+    //     'postTitle',
+    //     'postDescription',
+    //     'postPublished',
+    //     'postAuthor',
+    // ];
     /**
      * Display a listing of the resource.
      */
@@ -36,10 +37,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data =$request->only($this->columns);
+        $data=$request->validate([
+            'postTitle'=>'required||string|max:50',
+            'postDescription'=>'required||string',
+            'postAuthor'=>'required||string',
+
+        ]);
+
         $data['postPublished']=isset($request->postPublished);
         Post::create($data);
         return redirect('post');
+
+
+        // $data =$request->only($this->columns);
+        // $data['postPublished']=isset($request->postPublished);
+        // Post::create($data);
+        // return redirect('post');
 
 
         // $post=new Post();
@@ -80,10 +93,21 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data =$request->only($this->columns);
+
+        $data=$request->validate([
+            'postTitle'=>'required||string|max:50',
+            'postDescription'=>'required||string',
+            'postAuthor'=>'required||string',
+
+        ]);
+
         $data['postPublished']=isset($request->postPublished);
-        Post::where('postId',$id)->update($data);
+        Post::where('id',$id)->update($data);
         return redirect('post');
+        // $data =$request->only($this->columns);
+        // $data['postPublished']=isset($request->postPublished);
+        // Post::where('id',$id)->update($data);
+        // return redirect('post');
 
     }
 
@@ -92,6 +116,27 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Post::where('id',$id)->delete();
+        return redirect('post');
     }
+
+    public function trashed()
+    {
+        $post=Post::onlyTrashed()->get();
+        return view('trashedPost',compact('post'));
+    }
+
+    public function forceDelete(string $id)
+    {
+        Post::where('id',$id)->forceDelete();
+        return redirect('post');
+    }
+
+    public function restore(string $id)
+    {
+        Post::where('id',$id)->restore();
+        return redirect('post');
+    }
+
+
 }

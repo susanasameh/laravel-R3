@@ -36,7 +36,7 @@
 <div class="container">
   <h2>THE POST SHOW</h2>
   <ul class="list-group">
-    <li class="list-group-item list-group-item-success">The post ID is [{{$post->postId}}]</li>
+    <li class="list-group-item list-group-item-success">The post ID is [{{$post->id}}]</li>
     <li class="list-group-item list-group-item-info">The post title is : *{{$post->postTitle}}*</li>
     <li class="list-group-item list-group-item-warning">The post description is : <br>{{$post->postDescription}}
     <li class="list-group-item list-group-item-danger">The post author is "{{$post->postAuthor}}"</li>
@@ -51,7 +51,7 @@
 
 {{-- <body> --}}
     {{-- <div class="container"> --}}
-        {{-- <div class="well">The post ID is :{{$post->postId}}</div> --}}
+        {{-- <div class="well">The post ID is :{{$post->id}}</div> --}}
 {{-- <h2> <span style="color=black;"></span></h2>
 <h2 class="active">The post title is : {{$post->postTitle}}</h2>
 <h2>The post description is : {{$post->postDescription}}</h2>
