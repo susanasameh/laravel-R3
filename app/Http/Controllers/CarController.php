@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Car;
+use App\Traits\Common;
 
 class CarController extends Controller
 {
+    use Common;
 
-    private $columns = [
-        'title',
-        'description',
-        'published',
-    ];
+    // private $columns = [
+    //     'title',
+    //     'description',
+    //     'published',
+    // ];
 
     /**
      * Display a listing of the resource.
@@ -37,10 +40,20 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+
+        // $messages=[
+        //     'title.required'=>'العنوان مطلوب',
+        //     'title.string'=>'Should be string',
+        //     'description.required'=> 'should be text',
+        //     ];
+        $messages = $this->messages();
         $data=$request->validate([
             "title"=>'required|string|max:50',
             "description"=>'required|string',
-        ]);
+            'image' => 'required|mimes:png,jpg,jpeg,webp|max:2048',
+        ],$messages);
+        $fileName = $this->uploadFile($request->image, 'assets/images');
+        $data['image'] = $fileName;
         $data['published']=isset($request->published);
         Car::create($data);
         return redirect('car');
@@ -103,10 +116,124 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data=$request->only($this->columns);
-        $data['published']=isset($request->published);
-        Car::where('id',$id)->update($data);
-        return redirect('car');
+        // $data=$request->only($this->columns);
+
+        // $messages = $this->messages();
+        // $data=$request->validate([
+        //     "title"=>'required|string|max:50',
+        //     "description"=>'required|string',
+        //     'image'=>'required|mimes:png,jpg,jpeg,webp|max:2048',
+        // ],$messages);
+        // $fileName = $this->uploadFile($request->image, 'assets/images');
+        // $data['image'] = $fileName;
+        // $data['published']=isset($request->published);
+        // Car::where('id',$id)->update($data);
+        // return redirect('car');
+
+    //     $car = Car::findOrFail($id);
+    //     if ($request->hasFile('image')) {
+    //         // Remove old image (optional)
+    //         if ($car->image !== null && Storage::exists('public/' . $car->image)) {
+    //             Storage::delete('public/' . $car->image);
+    //         }
+
+    //         // Store new image
+    //         $image = $request->file('image');
+    //         $filename = $image->store('public/images');
+
+    //         $car->image = $filename;
+    //     }
+
+    //     // Update other fields
+    //     $car->update($request->all());
+
+    //     return redirect()->route('your-route')->with('success', 'Image updated successfully');
+    // }
+
+
+    // $messages = $this->messages();
+    //     $data=$request->validate([
+    //         "title"=>'required|string|max:50',
+    //         "description"=>'required|string',
+    //         'image'=>'required|mimes:png,jpg,jpeg,webp|max:2048',
+    //     ],$messages);
+    //     $fileName = $this->uploadFile($request->image, 'assets/images');
+    //     $data['image'] = $fileName;
+    //     $data['published']=isset($request->published);
+    //     // Car::where('id',$id)->update($data);
+    //     // return redirect('car');
+    //     $car = Car::where('id',$id)->update($data);
+    // if ($request->hasFile('image')) {
+    //     // Remove old image (optional)
+    //     if ($car->image !== null && Storage::exists('public/' . $car->image)) {
+    //         Storage::delete('public/' . $car->image);
+    //     }
+
+    //     // Store new image
+    //     $image = $request->file('image');
+    //     $filename = $image->store('public/images');
+
+    //     $car->image = $filename;
+    //     return redirect('car');
+    // }
+
+    // $messages = $this->messages();
+    // $data = $request->validate([
+    //     "title" => 'required|string|max:50',
+    //     "description" => 'required|string',
+    //     'image' => 'mimes:png,jpg,jpeg,webp|max:2048', // Make image optional
+    // ],$messages);
+
+    // if ($request->hasFile('image')) {
+    //     $oldImage = $request->input('old_image'); // Assuming you have old image name
+    //     if ($oldImage && Storage::exists('public/' . $oldImage)) {
+    //         Storage::delete('public/' . $oldImage);
+    //     }
+
+    //     $fileName = $this->uploadFile($request->image, 'assets/images');
+    //     $data['image'] = $fileName;
+    // }
+
+    // $data['published'] = isset($request->published);
+    // Car::where('id', $id)->update($data);
+
+    // return redirect('car');
+
+
+    $messages = $this->messages();
+    $data = $request->validate([
+        "title" => 'required|string|max:50',
+        "description" => 'required|string',
+        'image' => 'mimes:png,jpg,jpeg,webp|max:2048', // Make image optional
+    ],$messages);
+    $fileName = $this->uploadFile($request->image, 'assets/images');
+
+// If a new image is uploaded, clear the old image
+if ($request->hasFile('image')) {
+    $car = Car::find($id); // Retrieve the existing Car model instance
+
+    if ($car->image !== null && Storage::exists('app/public/assets/images/' . $car->image)) {
+        Storage::delete('app/public/assets/images/' . $car->image); // Delete the old image file
+    }
+
+    // Retrieve the old image path
+    // $oldImagePath = $car->image;
+
+    // Delete the old image if it exists
+//     if (Storage::exists(public_path($oldImagePath))) {
+//         Storage::delete(public_path($oldImagePath));
+//     }
+
+    $data['image'] = $fileName; // Update the image field with the new filename
+}
+
+$data['published'] = isset($request->published);
+Car::where('id', $id)->update($data);
+
+return redirect('car');
+
+
+
     }
 
     /**
@@ -135,4 +262,20 @@ class CarController extends Controller
         Car::where('id',$id)->restore();
         return redirect('car');
     }
+//بدل ما اعيدها في كل مكان احتاجها فيه جوة الجدول بعملها function
+//هنادي عليها في الجزء اللي انا عايزاه كده
+//$messages = $this->messages();
+//add $messages to validate
+    public function messages(){
+        return[
+            'title.required'=>'اسم السيارة مطلوب',
+            'title.string'=>'Should be string',
+            'description.required'=> 'should be text',
+            'image.required'=> 'Please be sure to select an image',
+            'image.mimes'=> 'Incorrect image type',
+            'image.max'=> 'Max file size exceeded',
+
+        ];
+    }
+
 }

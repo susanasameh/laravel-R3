@@ -13,7 +13,7 @@
 
 <div class="container">
   <h2>Vertical (basic) form</h2>
-  <form action="{{route('storeCar')}}" method="post">
+  <form action="{{route('storeCar')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
       <label for="title">Title:</label>
@@ -31,10 +31,18 @@
     {{$message}}
     @enderror
 
-   
+    <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" class="form-control" id="image" placeholder="Enter image" name="image">
+        @error('image')
+          {{ $message }}
+        @enderror
+      </div>
+
+
     <div class="checkbox">
       <label>
-        <input type="checkbox" name="published">
+        <input type="checkbox" name="published" @checked( old('published'))>
         {{-- <input type="checkbox" name="active" value="1" @if($active) checked @endif>
 <span>{{ $active ? 'Yes' : 'No' }}</span> --}}
         Published</label>

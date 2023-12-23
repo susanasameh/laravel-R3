@@ -150,6 +150,19 @@ Route::post('form',[FormController::class,'store'])->name('form');
 
 // Route::resource('car', CarController::class);
 
+Route::get('testpic',function(){
+    return view('testpic');
+});
+
+Route::get('image',function(){
+    return view('image');
+});
+
+Route::post('imageUpload',[ExampleController::class,'upload']
+)->name('imageUpload');
+
+
+
 
 
 //routes of car table:

@@ -13,7 +13,7 @@
 
 <div class="container">
   <h2>Vertical (basic) form</h2>
-  <form action="{{route('update',$car->id)}}" method="post">
+  <form action="{{route('update',$car->id)}}" method="post" enctype="multipart/form-data">
     @csrf
     @method('put')
     <div class="form-group">
@@ -25,6 +25,19 @@
       {{-- <input type="text" class="form-control" id="description" placeholder="Enter password" name="description"> --}}
       <textarea class="form-control" name="description" id="" cols="60" rows="3">{{$car->description}}</textarea>
     </div>
+
+    <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" class="form-control" id="image" name="image">
+        {{-- <img src="{{ asset('assets/images/1703013408.jpeg') }}" alt="car" style="width:200px;"> --}}
+        <img src="{{ asset('assets/images/'.$car->image) }}" alt="car" style="width:200px;">
+        {{-- <img src="{{ asset('storage/' . $model->image) }}"> --}}
+
+        @error('image')
+          {{ $message }}
+        @enderror
+      </div>
+
     <div class="checkbox">
       <label>
         <input type="checkbox" name="published" @checked($car->published)>

@@ -7,7 +7,7 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    // method to store and update data 
+    // method to store and update data
     // private $columns=[
     //     'id',
     //     'postTitle',
@@ -93,13 +93,18 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages=[
+            'title.required'=>'العنوان مطلوب',
+            'title.string'=>'Should be string',
+            'description.required'=> 'should be text',
+            ];
 
         $data=$request->validate([
             'postTitle'=>'required||string|max:50',
             'postDescription'=>'required||string',
             'postAuthor'=>'required||string',
 
-        ]);
+        ], $messages);
 
         $data['postPublished']=isset($request->postPublished);
         Post::where('id',$id)->update($data);

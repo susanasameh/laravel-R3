@@ -20,6 +20,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Published</th>
+        <th>Image</th>
         <th>CreatedAt</th>
         <th>UpdatedAt</th>
         <th>Edit</th>
@@ -42,6 +43,8 @@
                 No
             @endif
         </td>
+        {{-- <td><{{$data->image}}</td> --}}
+        <td><img src="{{ asset('assets/images/'.$data->image)}}" alt="car" style="width:200px;"></td>
         <td>{{$data->created_at}}</td>
         <td>{{$data->updated_at}}</td>
         <td><a href="updateCar/{{ $data->id }}" style="
