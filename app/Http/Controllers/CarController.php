@@ -116,6 +116,26 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        //best answer
+        $messages = $this->messages();
+        $data = $request->validate([
+             'title'=>'required|string|max:50',
+             'description'=> 'required|string',
+             //sometimes mean not required very important
+             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+            ], $messages);
+
+            if($request->hasFile('image')){
+                $fileName = $this->uploadFile($request->image, 'assets/images');
+                $data['image'] = $fileName;
+                unlink("assets/images/" . $request->oldImage);
+            }
+
+            $data['published'] = isset($request->published);
+            Car::where('id', $id)->update($data);
+            return redirect('car');
+
+
         // $data=$request->only($this->columns);
 
         // $messages = $this->messages();
@@ -200,21 +220,27 @@ class CarController extends Controller
     // return redirect('car');
 
 
-    $messages = $this->messages();
-    $data = $request->validate([
-        "title" => 'required|string|max:50',
-        "description" => 'required|string',
-        'image' => 'mimes:png,jpg,jpeg,webp|max:2048', // Make image optional
-    ],$messages);
-    $fileName = $this->uploadFile($request->image, 'assets/images');
 
-// If a new image is uploaded, clear the old image
-if ($request->hasFile('image')) {
-    $car = Car::find($id); // Retrieve the existing Car model instance
+// the task answer for validate and upload image
 
-    if ($car->image !== null && Storage::exists('app/public/assets/images/' . $car->image)) {
-        Storage::delete('app/public/assets/images/' . $car->image); // Delete the old image file
-    }
+//     $messages = $this->messages();
+//     $data = $request->validate([
+//         "title" => 'required|string|max:50',
+//         "description" => 'required|string',
+//         'image' => 'mimes:png,jpg,jpeg,webp|max:2048', // Make image optional
+//     ],$messages);
+//     $fileName = $this->uploadFile($request->image, 'assets/images');
+
+// // If a new image is uploaded, clear the old image
+// if ($request->hasFile('image')) {
+//     $car = Car::find($id); // Retrieve the existing Car model instance
+
+//     if ($car->image !== null && Storage::exists('app/public/assets/images/' . $car->image)) {
+//         Storage::delete('app/public/assets/images/' . $car->image); // Delete the old image file
+//     }
+
+
+
 
     // Retrieve the old image path
     // $oldImagePath = $car->image;
@@ -224,13 +250,13 @@ if ($request->hasFile('image')) {
 //         Storage::delete(public_path($oldImagePath));
 //     }
 
-    $data['image'] = $fileName; // Update the image field with the new filename
-}
+//     $data['image'] = $fileName; // Update the image field with the new filename
+// }
 
-$data['published'] = isset($request->published);
-Car::where('id', $id)->update($data);
+// $data['published'] = isset($request->published);
+// Car::where('id', $id)->update($data);
 
-return redirect('car');
+// return redirect('car');
 
 
 

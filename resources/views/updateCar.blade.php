@@ -38,6 +38,8 @@
         @enderror
       </div>
 
+      <input type="hidden" name="oldImage" value="{{$car->image}}">
+
     <div class="checkbox">
       <label>
         <input type="checkbox" name="published" @checked($car->published)>

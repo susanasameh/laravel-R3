@@ -103,8 +103,8 @@ return "<h1 style='color:red; text-align: center;'>We are HAPPY for your visit</
 });
 
 
-Route::get('contact',function(){
-    return view('contact');
+Route::get('contact1',function(){
+    return view('contact1');
 
 });
 
@@ -160,6 +160,20 @@ Route::get('image',function(){
 
 Route::post('imageUpload',[ExampleController::class,'upload']
 )->name('imageUpload');
+
+Route::get('testHome',function(){
+    return view('testHome');
+})->name('testHome');
+
+Route::get('404',function(){
+    return view('404');
+})->name('404');
+
+Route::get('contact',function(){
+    return view('contact');
+})->name('contact');
+
+
 
 
 
