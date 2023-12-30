@@ -19,6 +19,10 @@
             </div>
         </div>
     </div>
-</section>	
+</section>
 
+@endsection
+
+@section('title')
+404
 @endsection

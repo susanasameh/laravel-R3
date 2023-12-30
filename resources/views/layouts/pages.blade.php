@@ -29,3 +29,5 @@
 		@include('include.footerJs')
     </body>
 </html>
+
+@sectio

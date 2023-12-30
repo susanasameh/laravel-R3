@@ -3,6 +3,7 @@
     <head>
         <!-- Meta Tags -->
         @include('include.head')
+        
 
   </head>
     <body>

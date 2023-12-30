@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('postDescription');
             $table->boolean('postPublished');
             $table->string('postAuthor', 100);
+            
             $table->softDeletes();
             $table->timestamps();
         });
