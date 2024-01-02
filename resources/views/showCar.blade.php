@@ -93,6 +93,8 @@
           <div class="flip-card-back">
             <h2>Name of the car : {{$car->title}}</h2>
 <h2>Description :{{$car->description}}</h2>
+<h2>Category Name :{{$car->category->cat_name}}</h2>
+
 
 <h2>Updated_at-->{{$car->updated_at}}</h2>
 <h2>Created_at-->{{$car->created_at}}</h2>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Car;
+use App\Models\Category;
 use App\Traits\Common;
 
 class CarController extends Controller
@@ -22,8 +23,9 @@ class CarController extends Controller
      */
     public function index()
     {
+        $categories = Category::get();
         $car=Car::get();
-        return view("carTable",compact("car"));
+        return view('carTable',compact('car','categories'));
         // return view('carTable');
     }
 
@@ -32,7 +34,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addCar');
+        $categories = Category::get();
+        return view('addCar',compact('categories'));
     }
 
     /**
@@ -51,6 +54,7 @@ class CarController extends Controller
             "title"=>'required|string|max:50',
             "description"=>'required|string',
             'image' => 'required|mimes:png,jpg,jpeg,webp|max:2048',
+            'category_id'=>'required',
         ],$messages);
         $fileName = $this->uploadFile($request->image, 'assets/images');
         $data['image'] = $fileName;
@@ -107,8 +111,13 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
+        // $categories = Category::get();
+        // return view('addCar',compact('categories'));
+
+
+        $categories = Category::all();
         $car = Car::findOrFail($id);
-        return view('updateCar',compact("car"));
+        return view('updateCar',compact('car','categories'));
     }
 
     /**
@@ -122,7 +131,9 @@ class CarController extends Controller
              'title'=>'required|string|max:50',
              'description'=> 'required|string',
              //sometimes mean not required very important
-             'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
+             'image' => 'sometimes|mimes:png,jpg,jpeg,webp|max:2048',
+             'category_id'=>'required',
+
             ], $messages);
 
             if($request->hasFile('image')){
