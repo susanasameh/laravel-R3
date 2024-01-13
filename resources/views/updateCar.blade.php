@@ -47,6 +47,8 @@
           @foreach ($categories as $category)
           {{-- <option value="{{$category->id}}">{{$category->cat_name}}</option> --}}
           <option value="{{ $category->id }}" @selected(old('category_id', $car->category_id) == $category->id)>{{ $category->cat_name }}</option>
+          {{-- @selected($category->cat_name == $car->category['cat_name']) --}}
+          {{-- @selected($category->id == $car->category_id) --}}
           @endforeach
 
         </select>

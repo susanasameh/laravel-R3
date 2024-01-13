@@ -187,7 +187,7 @@ Route::get('createCar',[CarController::class,'create'])->name('createCar');
 
 Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 
-Route::get('car',[CarController::class,'index'])->name('car');
+Route::get('car',[CarController::class,'index'])->middleware('verified')->name('car');
 Route::get('updateCar/{id}', [CarController::class, 'edit']);
 Route::put('update/{id}', [CarController::class, 'update'])->name('update');
 Route::get('showCar/{id}',[CarController::class, 'show'])->name('showCar');
@@ -195,6 +195,8 @@ Route::get('deleteCar/{id}',[CarController::class, 'destroy']);
 Route::get('trashedCar',[CarController::class, 'trashed'])->name('trashedCar');
 Route::get('forceDeleteCar/{id}',[CarController::class, 'forceDelete'])->name('forceDeleteCar');
 Route::get('restoreCar/{id}',[CarController::class, 'restore'])->name('restoreCar');
+
+Route::get('test20',[ExampleController::class,'createSession']);
 
 
 
@@ -233,3 +235,8 @@ Route::get('restorePost/{id}',[PostController::class, 'restore'])->name('restore
 
 
 
+
+// Auth::routes();
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
