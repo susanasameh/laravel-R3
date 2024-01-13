@@ -7,6 +7,7 @@ use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,6 +173,13 @@ Route::get('404',function(){
 Route::get('contact',function(){
     return view('contact');
 })->name('contact');
+
+// Route::post('formMail',function(){
+//     return view('formMail');
+// })->name('formMail');
+
+Route::post('formMail',[Controller::class,('formMail')])->name('formMail');
+
 
 
 
