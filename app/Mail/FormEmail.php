@@ -8,24 +8,27 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class FormEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data = $data;
     }
 
-    public function build(){
-        return $this->markdown('emails.formMail')->subject(config('app.name') . ',contact us');
-    }
+    //if i use content()markdown not need to use build()
+
+    // public function build(){
+    //     return $this->markdown('emails.formMail')->subject(config('app.name') . ',contact us');
+    // }
 
     /**
      * Get the message envelope.
@@ -33,7 +36,9 @@ class FormEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Form Email',
+            from : new Address($this->data['email'], $this->data['name']),
+            subject: $this->data['subject'] . ' - Contact Us',
+            // subject: 'Form Email',
         );
     }
 
@@ -43,8 +48,12 @@ class FormEmail extends Mailable
     public function content(): Content
     {
         return new Content(
+            markdown: 'emails.formMail',
+            with:[
+                $this->data,
+            ]
 
-            view: 'contact',
+            // view: 'contact',
 
         );
     }

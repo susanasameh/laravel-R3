@@ -188,6 +188,12 @@ Route::post('formMail',[Controller::class,('formMail')])->name('formMail');
 
 
 //routes of car table:
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){ //...
+
 
 Route::get('createCar',[CarController::class,'create'])->name('createCar');
 
@@ -195,7 +201,8 @@ Route::get('createCar',[CarController::class,'create'])->name('createCar');
 
 Route::post('storeCar',[CarController::class,'store'])->name('storeCar');
 
-Route::get('car',[CarController::class,'index'])->middleware('verified')->name('car');
+// Route::get('car',[CarController::class,'index'])->middleware('verified')->name('car');
+Route::get('car',[CarController::class,'index'])->name('car');
 Route::get('updateCar/{id}', [CarController::class, 'edit']);
 Route::put('update/{id}', [CarController::class, 'update'])->name('update');
 Route::get('showCar/{id}',[CarController::class, 'show'])->name('showCar');
@@ -205,7 +212,7 @@ Route::get('forceDeleteCar/{id}',[CarController::class, 'forceDelete'])->name('f
 Route::get('restoreCar/{id}',[CarController::class, 'restore'])->name('restoreCar');
 
 Route::get('test20',[ExampleController::class,'createSession']);
-
+  });
 
 
 

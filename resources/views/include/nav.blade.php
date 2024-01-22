@@ -7,8 +7,8 @@
         <li class="{{ request()->routeIs('car') ? 'active' : '' }}"><a href="{{route('car')}}">Home</a></li>
         <li class="{{ request()->routeIs('createCar') ? 'active' : '' }}"><a href="{{route('createCar')}}">Insert Car</a></li>
         <li class="{{ request()->routeIs('trashedCar') ? 'active' : '' }}"><a href="{{route('trashedCar')}}">Trashed Car</a></li>
-        {{-- <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li> --}}
+        <li><a href="{{ LaravelLocalization::getLocalizedURL('en') }}">English</a></li>
+        <li><a href="{{ LaravelLocalization::getLocalizedURL('ar') }}">عربي</a></li>
       </ul>
     </div>
   </nav>
